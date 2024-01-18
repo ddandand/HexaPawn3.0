@@ -1,0 +1,92 @@
+Hello, this is some info about the HexaPawn3.0 I have made. Here are some 
+thoughts and things I would like to change. I will keep copies of this file
+across all of my versions of the code so I can see what has changed. I have
+been working on this game for a long time, 3.0 was the first actual 
+completion of the project as a base. 
+
+
+---------------------------------------------------------------------------
+For 4.0:
+- sAI iterative solver
+- Maybe no stalemate checker. I wanted it to be cleaner but it might not 
+even be needed
+
+
+---------------------------------------------------------------------------
+3.0: Messy Success
+
+Thoughts:
+- I know this program isnt fantastic. After my unsuccessful attempts with 
+HexaPawn 1.0 and 2.0 I just wanted everything to work within a reasonable
+functionality. With 1.0 and 2.0, I ended up letting too much time pass 
+becasue of school or whatever so I considered them failures, now that I 
+am graduated, I had the motivation to push out a successful delivarable.
+Parts of this code are actually pretty elegant and I am proud of, but
+the rest of it is pretty basic and doesnt have a design pattern or 
+programming standard consideration.
+
+- For the most of this program's lifetime, it was basically a remake of
+the 2.0 code witha more dedicated focus. I decided that I wanted it 
+finished and I didnt care about the prefect solution. That is why near
+the end I decided to refactor the code, because I thought of a better
+solution once I implemented the menu functionality.
+
+- I know that the algorithm for checking a forced stalemate is not pretty,
+I couldnt think of any other solution that would work so I just brute forced
+a solution. In 4.0 I hope to find a more elegant solution, or at very least
+refactor the code to be cleaner.
+
+- I know it is bad form to use "magical numbers" in code. I refactored my 
+code near completion which made it more officially a 3.0 delivarable. When
+I decided to last minute refactor my code, I just needed something to fill
+the holes of the code with the menu section and magical integers was the
+best solution that I came up with in the short time I was considering it.
+I feel that making them const int variables in main.cpp helped to make it
+more elegant.
+
+- The code flow got kind of messy when I started adding the different menus.
+I wish I had planned it differently because each screen I altered would
+begin to build problems into the logic of the actual game. It started to 
+get kind of unorganized and really needed to be planned better; refactored.
+
+- I think that I didn't NEED to make the 'check for stalemate' code, maybe
+I could have just left it as a user given forfeit if they couldnt move. If
+the player cant make a move, they would say "forfeit" which would make the
+opponant the victor.
+
+- I want all game information to be part of the board class, Im thinking 
+specifically about 'previous moves' section, but the whole game board 
+should be there, the line as well. That way all logic can be included as 
+the play() function and all of the data can be included in the Board 
+class; a complete decoupling of data and function. I see now that 
+all of the classes are still kind of awkwardly linked, even if the play()
+function is separated from the running of main(). Like the ~20 lines right 
+after the while(true) in play() could have all been within the Board 
+object class.
+
+- I think that the validate_format and O_legal/X_legal functions have some
+overlap when it comes to moving forwards.
+
+- Use a struct instead of an object for the Board?
+
+
+---------------------------------------------------------------------------
+2.0: Failure ~2022
+- This version has the code in it's own file. This was a failure for two 
+reasons: firstly, just like 1.0, I took too much time and let it sit 
+on the backburner so I lost my train of thought and forgot how my code
+was funcioning;and secondly, I got stuck on a solution to the forced 
+stalemate victory. Since I couldn't find a successful solution to the 
+victory, I just decided to cut it and restart with 3.0 sometime in late 
+2023, that is when I created the first success.
+
+
+---------------------------------------------------------------------------
+1.0: Failure ~2020
+- Considered a failure, not because it was bad, but because I got busy and
+ended up letting too much time after starting it and I ended up 
+forgetting any progress made and solutions created. This version was 
+mostly only ever started on paper, I started drawing out every board 
+state so I could get an idea of the problem I was starting. I believe 
+that this "version" was started right after watching the VSauce2 video
+on the HexaPawn game. RIP beautiful bastard.
