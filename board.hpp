@@ -42,3 +42,4 @@ public:
     friend ostream& operator<<(ostream& stream, const Board& self);
 
 };
+//test

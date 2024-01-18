@@ -292,3 +292,4 @@ int main() {
  * | Options: quit, play, info, menu, rules *will print when promted with 'o' or "options"*
  *  Enter a move: *move entered*
  */
+//test

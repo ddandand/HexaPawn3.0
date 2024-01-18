@@ -24,3 +24,5 @@ board.o: board.cpp
 clean:
 	rm *.o
 	rm main
+
+#test

@@ -90,3 +90,4 @@ mostly only ever started on paper, I started drawing out every board
 state so I could get an idea of the problem I was starting. I believe 
 that this "version" was started right after watching the VSauce2 video
 on the HexaPawn game. RIP beautiful bastard.
+//test
