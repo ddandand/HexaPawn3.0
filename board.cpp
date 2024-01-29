@@ -1,7 +1,12 @@
 /**
+ * @file main.cpp
+ * @author Jordan Ellison (jordan.ellison@hotmail.com)
  * @brief Board class housing all of the necessary funcionality and data for
  * the board object. 
- * 
+ * @version 3.0
+ * @date 2024-01-18
+ * @copyright Copyright (c) 2024
+ *
  * @throws runtime_error based on the user's input. This serves to check the
  * format and legality of a move, to catch any errors. In other words, to help
  * parse the input. The error will stop all flow back to the play() function
@@ -132,23 +137,27 @@ bool Board::check_win(){
 }
 
 /**
- * @brief the engine called by the play() function. This function takes the user's
- * move and performs the board-side operations on it: takes move, reformats it, 
- * validates the format and legality, then performs the move, and lastly checks 
- * for a winning condition (all assuming there is nothing illegal or invalid).
+ * @brief takes a string version provided by the user and turns it into a 4
+ * int vector to integrate with the board.setup cleanly.
  * 
- * @param move user's requested move.
- * @return true if there was a winning condigion.
- * @return false if there was no winning condition.
+ * @param move the original move provided by the user.
+ * @return vector<int> new_move as the complete and set integer encoding for
+ * the setup.
+ * 
+ * @throws runtime_error checks the length of the move.
  */
-bool Board::move(string& move){
-    //if the format and legality completed without an exception, the move can confidently be performed
-    vector<int> new_move = reformat_move(move);
-    validate_format(new_move);   
-    validate_legality(new_move, setup, round);
-    Board::perform_move(new_move);
+vector<int> Board::reformat_move(string& move){
+    if(move.length() != 4) 
+        throw runtime_error("Invalid format. Must be 4 characters long. \n            Please enter in the format of \"A1B2\".");
+    
+    vector<int> new_move;
+    //set all parts of new_move to integrate with the board[][]
+    new_move.push_back(move[0] - 17 - '0');
+    new_move.push_back(move[1] - 1 - '0');
+    new_move.push_back(move[2] - 17 - '0');
+    new_move.push_back(move[3] - 1 - '0');
 
-    return check_win();//if somebody won or not
+    return new_move;
 }
 
 /**
@@ -179,30 +188,6 @@ void Board::print_victory(vector<string> move_list){
 }
 
 /**
- * @brief takes a string version provided by the user and turns it into a 4
- * int vector to integrate with the board.setup cleanly.
- * 
- * @param move the original move provided by the user.
- * @return vector<int> new_move as the complete and set integer encoding for
- * the setup.
- * 
- * @throws runtime_error checks the length of the move.
- */
-vector<int> reformat_move(string& move){
-    if(move.length() != 4) 
-        throw runtime_error("Invalid format. Must be 4 characters long. \n            Please enter in the format of \"A1B2\".");
-    
-    vector<int> new_move;
-    //set all parts of new_move to integrate with the board[][]
-    new_move.push_back(move[0] - 17 - '0');
-    new_move.push_back(move[1] - 1 - '0');
-    new_move.push_back(move[2] - 17 - '0');
-    new_move.push_back(move[3] - 1 - '0');
-
-    return new_move;
-}
-
-/**
  * @brief takes in the int vector move from the user (after reformatting it)
  * and parses the rest of the formatting; that all parts of the vector are 
  * within the bounds of the board (1, 2, or 3), the piece only moves forward
@@ -213,7 +198,7 @@ vector<int> reformat_move(string& move){
  * @throws runtime_error if player input is invalid, not moving 1 space forward,
  * or if moving more than one space to the side.
  */
-void validate_format(vector<int> move){
+void Board::validate_format(vector<int> move){
     //if any characters are out of the bounds of the board (1-3) return false
     for (auto &ch : move)
         if (ch < 0 || 2 < ch)
@@ -243,7 +228,7 @@ void validate_format(vector<int> move){
  * move without being in the starting square, the space ahead isnt empty, or
  * tries diagonally but isnt actually taking an X space.
  */
-void o_legal(vector<int> move, vector<vector<char>> setup){
+void Board::o_legal(vector<int> move, vector<vector<char>> setup){
     //if not moving forwards (decreasing ASCII) its illegal
     if(move[0] >= move[2])  
         throw runtime_error("Illegal move. You can only move forwards.");
@@ -275,7 +260,7 @@ void o_legal(vector<int> move, vector<vector<char>> setup){
  * move without being in the starting square, the space ahead isnt empty, or
  * tries diagonally but isnt actually taking an O space.
  */
-void x_legal(vector<int> move, vector<vector<char>> setup){
+void Board::x_legal(vector<int> move, vector<vector<char>> setup){
     //if not moving forwards (decreasing ASCII) its illegal
     if(move[0] <= move[2])  
         throw runtime_error("Illegal move. You can only move forwards.");
@@ -305,11 +290,31 @@ void x_legal(vector<int> move, vector<vector<char>> setup){
  * unformatted, if necessary.
  *
 */
-void validate_legality(vector<int> move, vector<vector<char>> setup, int current_round){
+void Board::validate_legality(vector<int> move, vector<vector<char>> setup, int current_round){
     if(current_round%2 == 0)
         o_legal(move, setup);//round is even
     else 
         x_legal(move, setup);//round is odd 
+}
+
+/**
+ * @brief the engine called by the play() function. This function takes the user's
+ * move and performs the board-side operations on it: takes move, reformats it, 
+ * validates the format and legality, then performs the move, and lastly checks 
+ * for a winning condition (all assuming there is nothing illegal or invalid).
+ * 
+ * @param move user's requested move.
+ * @return true if there was a winning condigion.
+ * @return false if there was no winning condition.
+ */
+bool Board::move(string& move){
+    //if the format and legality completed without an exception, the move can confidently be performed
+    vector<int> new_move = reformat_move(move);
+    validate_format(new_move);   
+    validate_legality(new_move, setup, round);
+    Board::perform_move(new_move);
+
+    return check_win();//if somebody won or not
 }
 
 /**
@@ -332,4 +337,3 @@ stream << "\t     -----------\n";
 
 return stream;
 };
-//test

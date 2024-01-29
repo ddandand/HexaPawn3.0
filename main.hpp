@@ -23,4 +23,3 @@ int rules();
 void goodbye();
 
 int main();
-//test
