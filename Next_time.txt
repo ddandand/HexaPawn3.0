@@ -10,6 +10,7 @@ For 4.0:
 - sAI iterative solver
 - Maybe no stalemate checker. I wanted it to be cleaner but it might not 
 even be needed
+- write it in js for web developoment?
 
 
 ---------------------------------------------------------------------------
